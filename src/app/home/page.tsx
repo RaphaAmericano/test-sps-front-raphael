@@ -1,7 +1,7 @@
 
 
 
-export default function Login() {
+export default function Home() {
   return (
     <main className="flex items-center justify-center h-screen">
       <h1>Home</h1>      
