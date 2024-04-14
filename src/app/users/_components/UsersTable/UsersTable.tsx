@@ -1,15 +1,9 @@
-import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
-import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { User } from "@/types/user"
+import { TableHead, TableRow, TableHeader, TableBody, Table } from "@/components/ui/table"
 import UserRow from "./UserRow"
+import { getUsers } from "@/actions/getUsers"
 
-type UsersTableProps = {
-  users: User[]
-}
-
-function UsersTable({ users }: UsersTableProps){
-  
+async function UsersTable(){
+  const users = await getUsers()
   return (
       <div className="border shadow-sm rounded-lg p-2">
               <Table>
@@ -25,7 +19,7 @@ function UsersTable({ users }: UsersTableProps){
                 </TableHeader>
                 <TableBody>
                     {users.map((user) => <UserRow key={user.id} {...user}/>)}                  
-                  </TableBody>
+                </TableBody>
               </Table>
       </div>
   )

@@ -22,7 +22,6 @@ function NewUserForm(){
 
     const [loginFormActionState, formAction] = useFormState(loginFormAction, {
         message: "",
-
     })
 
     const form = useForm<NewUserValidationSchema>({
