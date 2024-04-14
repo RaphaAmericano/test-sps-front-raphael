@@ -6,7 +6,8 @@ const schema = z.object({
         message: "Email inválido"
     }),
     password: z.string().min(1),
-    type: z.string()
+    type: z.string(),
+    token: z.string()
 })
 
 type NewUserValidationSchema = z.infer<typeof schema>

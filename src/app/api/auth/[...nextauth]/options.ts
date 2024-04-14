@@ -17,6 +17,7 @@ export const options:NextAuthOptions = {
                 const response = await authUser({ email, password });
                 if(response.message === "Usuário não autenticado") return null
                 const { data: { email:authEmail, password:authPassword, ...props} } = response;
+                console.log(props)
                 return {
                     email:authEmail,
                     ...props
@@ -26,15 +27,16 @@ export const options:NextAuthOptions = {
     ],
     callbacks: {
         async jwt({ token, user }) {
-            console.log({ token, user })
-            // if(user) return {...token, ...user }
+
+            if(user) return {...token, ...user }
             return token
         },
         async session({ session, token, user }) {
             console.log({ session, token, user })
             // session.user = token.user 
-            return session
+            return { ...session, ...token, user:token}
         },
+
     },
     pages:{
         signIn:"/login",

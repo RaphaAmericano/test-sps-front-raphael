@@ -17,16 +17,19 @@ import { newUserFormAction } from "@/actions/newUserForm"
 
 import { useFormState } from "react-dom"
 import AlertComponent from "@/components/AlertComponent/AlertComponent"
+import { useSession } from "next-auth/react"
 
 const initialValues:NewUserValidationSchema = {
   email:"",
   password: "",
   name: "",
   type: "user",
+  token: ""
 }
 
 function NewUserForm(){
-
+    const { data } = useSession()
+    const token = data?.user.token
     const [newUserFormActionState, formAction] = useFormState(newUserFormAction, {
         message: "",
     })
@@ -59,6 +62,8 @@ function NewUserForm(){
                       const formData = new FormData(formRef.current!)
                       const type = getValues("type")
                       formData.append("type", type)
+                      
+                      formData.append("token", token!)
                       formAction(formData)
                     })(e)
                 }}

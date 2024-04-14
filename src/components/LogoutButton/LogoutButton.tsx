@@ -1,12 +1,9 @@
-"use client"
-
-import { signOut } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { Button } from "../ui/button"
 
 function LogoutButton(){
     async function signout(){
-        
-        await signOut({ callbackUrl:"/login" })
+        await signOut({ callbackUrl:"/" })
     }
     return (
         <Button className="text-white" variant="ghost" onClick={signout}>Sair</Button>

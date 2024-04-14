@@ -14,7 +14,6 @@ export async function newUserFormAction( prevState: NewUserFormState,  data: For
     const formData = Object.fromEntries(data)
     // remove empty strings from formData    
     const parsed = schema.safeParse(formData)
-    
     if(parsed.success === false){
         const fields: Record<string, string> = {}
         for (const key of Object.keys(formData)){
@@ -28,7 +27,8 @@ export async function newUserFormAction( prevState: NewUserFormState,  data: For
     } else {
 
         try {
-            const response = await postUser(parsed.data)
+            const { token, ...props} = parsed.data
+            const response = await postUser(props, token)
             if(response.status === 200 || response.status === 201){
                 revalidateTag("users")
                 return {
