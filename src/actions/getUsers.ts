@@ -4,8 +4,7 @@ import { User } from "@/types/user"
 
 export async function getUsers(): Promise<User[]>{
     const response = await fetch(`${process.env.API_HOST}/users`, {
-        cache: "default",
-        next:{ tags: ["users"], revalidate: 3600 }
+        next:{ tags: ["users"] }
         // headers: {
         //     "Authorization": `Bearer ${token}`
         // }

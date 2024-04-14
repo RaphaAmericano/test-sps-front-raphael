@@ -50,7 +50,7 @@ function NewUserForm(){
                 >
                 <Card className="max-w-2xl mx-auto">
           <CardHeader>
-            <CardTitle>Cadastro de Usuário</CardTitle>
+            {/* <CardTitle>Cadastro de Usuário</CardTitle> */}
             <CardDescription>Preencha os campos para cadastrar um novo usuário.</CardDescription>
           </CardHeader>
           <CardContent>

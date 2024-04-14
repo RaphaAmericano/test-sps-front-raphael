@@ -10,10 +10,11 @@ export default function Users() {
           <div className="container flex items-start gap-8 px-4 md:px-6">
             <UserContextContainer>
               <div className="space-y-6">
-                <h1 className="text-4xl font-bold tracking-tighter">Lista de usuários</h1>
+                <h2 className="text-4xl font-bold tracking-tighter">Lista de usuários</h2>
                 <UsersTable />  
               </div>
               <div className="space-y-6">
+                <h2 className="text-4xl font-bold tracking-tighter">Cadastro de usuários</h2>
                 <NewUserForm />
               </div>
               <AlertDialogContainer />
