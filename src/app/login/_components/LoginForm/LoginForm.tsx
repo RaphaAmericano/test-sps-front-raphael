@@ -20,7 +20,7 @@ function LoginForm(){
         resolver: zodResolver(schema),
         defaultValues: {
             email:"",
-            password: "/home",
+            password: "",
         }
     })
     const { handleSubmit, control } = form;

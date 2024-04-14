@@ -27,7 +27,7 @@ function UserDeleteAlertDialog() {
       setSubiting(true)
       try {
         const response = await deleteUser(id)
-        console.log(response)
+        
         setFeedbackMessage(response)   
         setSubiting(false)
         setTimeout(() => {

@@ -15,10 +15,8 @@ export const options:NextAuthOptions = {
                 if(!credentials?.email || !credentials?.password) return null; 
                 const { email, password } = credentials;
                 const response = await authUser({ email, password });
-                console.log(response)
                 if(response.message === "Usuário não autenticado") return null
                 const { data: { email:authEmail, password:authPassword, ...props} } = response;
-                console.log(props)
                 return {
                     email:authEmail,
                     ...props

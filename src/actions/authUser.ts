@@ -6,7 +6,6 @@ import { User } from "@/types/user"
 type AuthUserRequestType = Record<"email" | "password", string>
 
 export async function authUser(data:AuthUserRequestType){
-    console.log(data)
     const token = await fetch(`${process.env.API_HOST}/auth`, {
         method: "POST",
         headers: {
