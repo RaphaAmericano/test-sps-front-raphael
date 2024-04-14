@@ -56,34 +56,59 @@ function NewUserForm(){
           <CardContent>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Nome</Label>
-                  <Input placeholder="John" required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input placeholder="Doe" required />
-                </div>
+                <Controller 
+                  control={control}
+                  name="name"
+                  render={( { field }) => (
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Nome</Label>
+                      <Input id="name" required placeholder="João" {...field } />
+                    </div>
+                  )}
+                />
+                <Controller 
+                  control={control}
+                  name="email"
+                  render={( { field }) => (
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email</Label>
+                      <Input id="email" placeholder="usuario@spsgroup.com.br" required {...field }  />
+                    </div>
+                  )}
+                />  
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input id="password" required type="password" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="type">Tipo</Label>
-                <Select required>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione o tipo" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Tipos</SelectLabel>
-                      <SelectItem value="admin">Administrador</SelectItem>
-                      <SelectItem value="user">Usuário</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
+              <Controller 
+                  control={control}
+                  name="password"
+                  render={( { field }) => (
+                    <div className="space-y-2">
+                      <Label htmlFor="password">Password</Label>
+                      <Input id="password" required type="password" {...field } />
+                    </div>
+                  )}
+                />
+                <Controller 
+                  control={control}
+                  name="type"
+                  render={( { field }) => (
+                    <div className="space-y-2">
+                      <Label htmlFor="type">Tipo</Label>
+                      <Select required {...field}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione o tipo" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Tipos</SelectLabel>
+                            <SelectItem value="admin">Administrador</SelectItem>
+                            <SelectItem value="user">Usuário</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                />
+              
             </div>
           </CardContent>
           <CardFooter>

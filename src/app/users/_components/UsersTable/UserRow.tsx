@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { User } from "@/types/user"
 import MoreHorizontalIcon from "@/components/icons/MoreHorizontalIcon"
 import UserDeleteButton from "./UserDeleteButton"
+import Link from "next/link"
 
 type UserRowProps = User
 function UserRow(props:UserRowProps){
@@ -21,11 +22,15 @@ function UserRow(props:UserRowProps){
                 <DropdownMenuTrigger asChild>
                     <Button size="icon" variant="ghost">
                     <MoreHorizontalIcon className="w-4 h-4" />
-                    <span className="sr-only">Ações</span>
+                        <span className="sr-only">Ações</span>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Editar</DropdownMenuItem>
+                    <Link href={`/users/${id}`}>
+                        <DropdownMenuItem>
+                        Editar
+                        </DropdownMenuItem>
+                    </Link>
                     <UserDeleteButton user={props} />
                 </DropdownMenuContent>
                 </DropdownMenu>
