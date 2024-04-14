@@ -13,9 +13,10 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
 import InputFeedback from "@/components/InputFeeback"
-import EyeIcon from "@/components/EyeIcon"
+
 import { loginFormAction } from "@/actions/loginForm"
 import { useFormState } from "react-dom"
+import EyeIcon from "@/components/icons/EyeIcon"
 
 function LoginForm(){
 
