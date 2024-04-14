@@ -35,5 +35,9 @@ export const options:NextAuthOptions = {
             // session.user = token.user 
             return session
         },
+    },
+    pages:{
+        signIn:"/login",
+        signOut: "/"
     }
 }

@@ -3,9 +3,9 @@ import { useSession } from "next-auth/react"
 import LoginForm from "./_components/LoginForm/LoginForm"
 import { redirect } from "next/navigation"
 export default function Login() {
-  const session = useSession()
+  const { status } = useSession()
 
-  if(session.status === "authenticated"){
+  if(status === "authenticated"){
     redirect("/home")
   } 
 

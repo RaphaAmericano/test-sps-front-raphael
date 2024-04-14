@@ -29,7 +29,7 @@ function LoginForm(){
     async function formSubmit(formData: LoginValidationSchema){
         await signIn("credentials", {
             ...formData,
-            callbackUrl:"/home"
+            redirect: false
         })
     }
     return (
