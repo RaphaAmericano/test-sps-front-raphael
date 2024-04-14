@@ -1,4 +1,5 @@
 import { getUsers } from "@/actions/getUsers"
+import NewUserForm from "./_components/NewUserForm/NewUserForm"
 
 
 
@@ -11,6 +12,8 @@ export default async function Users() {
       <ul>
         {users.map((user) => <li key={user.id}>{user.name}</li>)}    
       </ul>
+      <h2>Novo Usuario</h2>
+      <NewUserForm />
     </main>
   )
 }
