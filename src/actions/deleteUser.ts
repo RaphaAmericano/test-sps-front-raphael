@@ -7,8 +7,6 @@ export async function deleteUser(id:DeleteUserRequestType){
         method: "DELETE"
     })
     const parsed = await response.json()
-    console.log(parsed)
-    console.log(response.status)
     if(response.status === 200){
         revalidateTag("users")
         return parsed.message

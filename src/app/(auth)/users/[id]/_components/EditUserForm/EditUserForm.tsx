@@ -20,7 +20,6 @@ import AlertComponent from "@/components/AlertComponent/AlertComponent"
 type EditUserFormProps = EditUserValidationSchema
 
 function EditUserForm(props:EditUserFormProps){
-
     const [editUserFormActionState, formAction] = useFormState(editUserFormAction, {
         message: "",
     })

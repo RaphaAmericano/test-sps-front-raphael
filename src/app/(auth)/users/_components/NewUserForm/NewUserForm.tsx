@@ -35,10 +35,6 @@ function NewUserForm(){
         resolver: zodResolver(schema),
         defaultValues: {
             ...initialValues,
-            // email:"",
-            // password: "",
-            // name: "",
-            // type: "user",
             ...(newUserFormActionState?.fields ?? {})
         }
     })

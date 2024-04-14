@@ -1,26 +1,31 @@
 "use server"
 
 import { User } from "@/types/user"
-import { NextResponse } from "next/server"
 
-type AuthUserRequestType = Omit<User, "id" | "name" | "type" >
+
+type AuthUserRequestType = Record<"email" | "password", string>
+
 export async function authUser(data:AuthUserRequestType){
-    const token = await fetch(`${process.env.API_HOST}/users`, {
+    console.log(data)
+    const token = await fetch(`${process.env.API_HOST}/auth`, {
         method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(data)
     })
-    // Validacao de error
-
-    const response = NextResponse.json(token, {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-    })
-
-    response.cookies.set({
-        name: "auth",
-        path:"/",
-        value: JSON.stringify(token)
-    })
     
-    return response   
+    const tokenParsed = await token.json()
+    
+    
+    if(!token.ok || tokenParsed.message === "Usuário não autenticado."){
+        return {
+            message: "Usuário não autenticado"
+        }
+    }
+
+    return {
+        message: "Usuário autenticado com sucesso.",
+        data:tokenParsed
+    }
 }

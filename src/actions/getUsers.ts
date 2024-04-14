@@ -10,6 +10,7 @@ export async function getUsers(): Promise<User[]>{
         // }
 
     })
+    console.log(response)
     const users:User[] = ( await response.json() ).data
     return users
 }

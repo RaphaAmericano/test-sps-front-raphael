@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-
+import { signIn } from "next-auth/react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, FormProvider, Controller } from "react-hook-form"
 
@@ -11,41 +11,37 @@ import { CardTitle, CardDescription, CardHeader, CardContent, CardFooter, Card }
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-
 import InputFeedback from "@/components/InputFeeback"
-
-import { loginFormAction } from "@/actions/loginForm"
-import { useFormState } from "react-dom"
 import EyeIcon from "@/components/icons/EyeIcon"
 
 function LoginForm(){
-
-    const [loginFormActionState, formAction] = useFormState(loginFormAction, {
-        message: "",
-
-    })
-
+    
     const form = useForm<LoginValidationSchema>({
         resolver: zodResolver(schema),
         defaultValues: {
             email:"",
-            password: "",
-            ...(loginFormActionState?.fields ?? {})
+            password: "/home",
         }
     })
     const { handleSubmit, control } = form;
 
     const formRef = useRef<HTMLFormElement>(null)
-
+    async function formSubmit(formData: LoginValidationSchema){
+        await signIn("credentials", {
+            ...formData,
+            callbackUrl:"/home"
+        })
+    }
     return (
         <FormProvider {...form}>
             <form 
                 ref={formRef}
-                action={formAction}  
+                // action={formAction}  
                 onSubmit={ (e) => {
                     e.preventDefault()
                     handleSubmit(() => {
-                        formAction(new FormData(formRef.current!))
+                        const formData = Object.fromEntries(new FormData(formRef.current!)) as LoginValidationSchema
+                        formSubmit(formData)
                     })(e)
                 }}
                 >
@@ -60,7 +56,7 @@ function LoginForm(){
                             <Controller
                             control={control}
                             name="email"
-                            render={({field, fieldState, formState }) => (
+                            render={({field }) => (
                                 <div className="space-y-2">
                                     <Label htmlFor="email">Email</Label>
                                     <Input className="w-[400px]" {...field} placeholder="usuario@sps.group.com" />
@@ -71,7 +67,7 @@ function LoginForm(){
                             <Controller 
                                 control={control}
                                 name="password"
-                                render={({field, fieldState, formState }) => (
+                                render={({field }) => (
                                     <div className="space-y-2">
                                         <Label htmlFor="password">Password</Label>
                                         <Input {...field} type="password" />

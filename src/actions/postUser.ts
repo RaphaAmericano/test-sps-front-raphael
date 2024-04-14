@@ -1,14 +1,15 @@
 "use server"
 
 import { User } from "@/types/user"
-import { revalidateTag } from "next/cache"
+import { revalidatePath } from "next/cache"
 type PostUserRequestType = Omit<User, "id">
 export async function postUser(data:PostUserRequestType){
     const user = await fetch(`${process.env.API_HOST}/users`, {
         method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(data)
     })
-    console.log(user)
-    revalidateTag("users")
-
+    return user
 }
