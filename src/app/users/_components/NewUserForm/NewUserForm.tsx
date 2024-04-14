@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, FormProvider, Controller } from "react-hook-form"
@@ -13,28 +13,44 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
-import InputFeedback from "@/components/InputFeeback"
-import EyeIcon from "@/components/icons/EyeIcon"
-import { loginFormAction } from "@/actions/loginForm"
+import { newUserFormAction } from "@/actions/newUserForm"
+
 import { useFormState } from "react-dom"
+import AlertComponent from "@/components/AlertComponent/AlertComponent"
+
+const initialValues:NewUserValidationSchema = {
+  email:"",
+  password: "",
+  name: "",
+  type: "user",
+}
 
 function NewUserForm(){
 
-    const [loginFormActionState, formAction] = useFormState(loginFormAction, {
+    const [newUserFormActionState, formAction] = useFormState(newUserFormAction, {
         message: "",
     })
 
     const form = useForm<NewUserValidationSchema>({
         resolver: zodResolver(schema),
         defaultValues: {
-            email:"",
-            password: "",
-            ...(loginFormActionState?.fields ?? {})
+            ...initialValues,
+            // email:"",
+            // password: "",
+            // name: "",
+            // type: "user",
+            ...(newUserFormActionState?.fields ?? {})
         }
     })
-    const { handleSubmit, control } = form;
+    const { handleSubmit, control, getValues, reset } = form;
 
     const formRef = useRef<HTMLFormElement>(null)
+
+    useEffect(() => {
+      if(newUserFormActionState.message === "Usuário criado com sucesso."){
+        reset(initialValues)
+      }
+    }, [newUserFormActionState.message, reset])
 
     return (
         <FormProvider {...form}>
@@ -44,7 +60,10 @@ function NewUserForm(){
                 onSubmit={ (e) => {
                     e.preventDefault()
                     handleSubmit(() => {
-                        formAction(new FormData(formRef.current!))
+                      const formData = new FormData(formRef.current!)
+                      const type = getValues("type")
+                      formData.append("type", type)
+                      formAction(formData)
                     })(e)
                 }}
                 >
@@ -90,10 +109,12 @@ function NewUserForm(){
                 <Controller 
                   control={control}
                   name="type"
-                  render={( { field }) => (
+                  render={( { field }) => {
+                    const { value, onChange} = field
+                    return (
                     <div className="space-y-2">
                       <Label htmlFor="type">Tipo</Label>
-                      <Select required {...field}>
+                      <Select required value={value} onValueChange={onChange} >
                         <SelectTrigger>
                           <SelectValue placeholder="Selecione o tipo" />
                         </SelectTrigger>
@@ -106,10 +127,14 @@ function NewUserForm(){
                         </SelectContent>
                       </Select>
                     </div>
-                  )}
+                  )}}
                 />
-              
-            </div>
+                 {newUserFormActionState.message && (
+                    <div className="space-y-2">
+                        <AlertComponent message={newUserFormActionState.message} type={newUserFormActionState.message === "Usuário criado com sucesso." ? "default" : "destructive"} />
+                    </div>
+                  )}
+          </div>
           </CardContent>
           <CardFooter>
             <Button className="w-full" type="submit">

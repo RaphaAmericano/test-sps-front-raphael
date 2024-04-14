@@ -1,12 +1,13 @@
 import { z } from "zod"
 
 const schema = z.object({
-    name: z.string().trim(),
+    id: z.string().trim(),
+    name: z.string().trim().optional(),
     email: z.string().trim().email({
         message: "Email inválido"
-    }),
-    password: z.string().min(1),
-    type: z.string()
+    }).optional(),
+    password: z.string().min(1).optional(),
+    type: z.string().optional()
 })
 
 type EditUserValidationSchema = z.infer<typeof schema>
