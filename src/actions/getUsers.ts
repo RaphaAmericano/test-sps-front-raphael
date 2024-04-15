@@ -10,13 +10,17 @@ export async function getUsers(): Promise<User[]>{
     if(token === undefined){
         redirect("/")
     }
-    const response = await fetch(`${process.env.API_HOST}/users`, {
-        next:{ tags: ["users"] },
-        headers: {
-            "Authorization": `Bearer ${token.value!}`
-        }
-
-    })
-    const users:User[] = ( await response.json() ).data
-    return users
+    try {
+        const response = await fetch(`${process.env.API_HOST}/users`, {
+            next:{ tags: ["users"] },
+            headers: {
+                "Authorization": `Bearer ${token.value!}`
+            }
+    
+        })
+        const users:User[] = ( await response.json() ).data
+        return users
+    } catch (error) {
+        redirect("/users")
+    }
 }
