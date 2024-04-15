@@ -16,11 +16,8 @@ export default function UserLayout({
 }>) {
   
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        {children}
-      </body>
-    </html>
-  );
+          <>
+          {children}
+          </>
+          );
 }

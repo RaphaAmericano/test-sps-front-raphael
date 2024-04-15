@@ -6,7 +6,6 @@ type PostUserRequestType = Omit<User, "id">
 export async function postUser(data:PostUserRequestType){
     const cookieStore = cookies()
     const token = cookieStore.get("token")
-    console.log(token.value)
     if(token === undefined){
         throw new Error("Token indefinido") 
     }

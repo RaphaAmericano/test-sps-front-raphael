@@ -2,6 +2,7 @@ import type { NextAuthOptions } from "next-auth"
 import { authUser } from "@/actions/authUser"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 export const options:NextAuthOptions = {
     providers: [      
         CredentialsProvider({
@@ -43,5 +44,9 @@ export const options:NextAuthOptions = {
         async signOut() {
             cookies().delete("token")
         },
+        async signIn(props){
+            console.log(props)
+            console.log("/signin", "push")
+        }
     }
 }

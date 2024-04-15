@@ -16,11 +16,9 @@ export default function HomeLayout({
 }>) {
   
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        {children}
-      </body>
-    </html>
-  );
+          <>
+          <Navbar />
+          {children}
+          </>
+      );
 }

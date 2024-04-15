@@ -15,14 +15,9 @@ export default function UsersLayout({
   children: React.ReactNode;
 }>) {
   
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        <main className="flex items-center justify-center">
-        {children}
-        </main>
-      </body>
-    </html>
-  );
+  return (<>
+            <Navbar />
+            {children}
+          </>
+          );
 }
