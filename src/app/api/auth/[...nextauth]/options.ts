@@ -14,8 +14,12 @@ export const options:NextAuthOptions = {
             async authorize(credentials, req){
                 if(!credentials?.email || !credentials?.password) return null; 
                 const { email, password } = credentials;
-                const response = await authUser({ email, password });
-                if(response.message === "Usuário não autenticado") return null
+                const response = await authUser({ email, password });                
+                console.log(response)
+                if( response.message === "Usuário não autenticado"  || 
+                    response.message ===  "Usuário ou senha inválido.") {
+                        throw new Error(response.message)
+                    }
                 const { data: { email:authEmail, password:authPassword, ...props} } = response;
                 cookies().set("token", props.token)
                     
@@ -46,7 +50,6 @@ export const options:NextAuthOptions = {
         },
         async signIn(props){
             console.log(props)
-            console.log("/signin", "push")
         }
     }
 }

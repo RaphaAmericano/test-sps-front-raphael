@@ -13,9 +13,11 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import InputFeedback from "@/components/InputFeeback"
 import EyeIcon from "@/components/icons/EyeIcon"
+import AlertComponent from "@/components/AlertComponent/AlertComponent"
+import { useRouter } from "next/navigation"
 
 function LoginForm(){
-    
+    const router = useRouter()
     const form = useForm<LoginValidationSchema>({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -23,20 +25,29 @@ function LoginForm(){
             password: "",
         }
     })
-    const { handleSubmit, control } = form;
+    const { handleSubmit, control, setError, formState: { errors } } = form;
 
     const formRef = useRef<HTMLFormElement>(null)
     async function formSubmit(formData: LoginValidationSchema){
-        await signIn("credentials", {
+        const signin = await signIn("credentials", {
             ...formData,
-            callbackUrl: "/home"
+            redirect: false
+            // callbackUrl: "/home"
         })
+        if(signin && (signin.status === 401)){
+            setError("root.serverError", {
+                type: "server",
+                message: signin.error as string
+            })
+        }
+        if(signin && (signin.status === 200)){
+            router.push("/home")
+        }
     }
     return (
         <FormProvider {...form}>
             <form 
                 ref={formRef}
-                // action={formAction}  
                 onSubmit={ (e) => {
                     e.preventDefault()
                     handleSubmit(() => {
@@ -56,26 +67,40 @@ function LoginForm(){
                             <Controller
                             control={control}
                             name="email"
-                            render={({field }) => (
-                                <div className="space-y-2">
-                                    <Label htmlFor="email">Email</Label>
-                                    <Input className="w-[400px]" {...field} placeholder="usuario@sps.group.com" />
-                                    <InputFeedback text="Preencha seu email" />
-                                </div>
-                            )}
+                            render={({ field, fieldState }) => {
+                                const { invalid, isTouched, error } = fieldState
+                                return (
+                                    <div className="space-y-2">
+                                        <Label htmlFor="email">Email</Label>
+                                        <Input className="w-[400px]" {...field} placeholder="usuario@sps.group.com" />
+                                        {(error && isTouched) ? (<InputFeedback text="Preencha seu email" />) : null}
+                                    </div>
+                                )}
+                            }
                             />
                             <Controller 
                                 control={control}
                                 name="password"
-                                render={({field }) => (
-                                    <div className="space-y-2">
-                                        <Label htmlFor="password">Password</Label>
-                                        <Input {...field} type="password" />
-                                        <InputFeedback text="Preencha sua senha." icon={<EyeIcon className="w-4 h-4 opacity-50" />} />
-                                    </div>
-                                )}
+                                render={({ field, fieldState }) => {
+                                    console.log(fieldState)
+                                    const { invalid, isTouched, error } = fieldState
+                                    return (
+                                        <div className="space-y-2">
+                                            <Label htmlFor="password">Password</Label>
+                                            <Input {...field} type="password" />
+                                            {(error && isTouched) ?? (<InputFeedback text="Preencha sua senha." icon={<EyeIcon className="w-4 h-4 opacity-50" />} />)}
+                                            
+                                        </div>
+                                    )}
+                                }
                             />
                             
+                            {(errors.root?.serverError.type === "server") && (
+                                <div className="space-y-2">
+                                    <AlertComponent message={errors.root?.serverError.message!} type={"destructive"} />
+                                </div>
+                            )}
+
                         </div>
                     </CardContent>
                     <CardFooter>

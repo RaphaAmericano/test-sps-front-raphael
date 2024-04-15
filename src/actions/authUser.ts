@@ -17,7 +17,12 @@ export async function authUser(data:AuthUserRequestType){
     
     const tokenParsed = await token.json()
     
-    
+    if(!token.ok || tokenParsed.message === "Usuário ou senha inválido." ){
+        return {
+            message: "Usuário ou senha inválido."
+        }
+    }
+
     if(!token.ok || tokenParsed.message === "Usuário não autenticado."){
         return {
             message: "Usuário não autenticado"
