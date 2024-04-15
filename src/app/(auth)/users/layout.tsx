@@ -16,7 +16,6 @@ export default function UsersLayout({
 }>) {
   
   return (<>
-            <Navbar />
             {children}
           </>
           );
