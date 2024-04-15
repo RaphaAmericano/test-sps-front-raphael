@@ -7,29 +7,23 @@ import { useForm, FormProvider, Controller } from "react-hook-form"
 
 import schema from "./NewUserForm.schema"
 import type { NewUserValidationSchema } from "./NewUserForm.schema"
-import { CardTitle, CardDescription, CardHeader, CardContent, CardFooter, Card } from "@/components/ui/card"
+import { CardDescription, CardHeader, CardContent, CardFooter, Card } from "@/components/ui/card"
 import { SelectValue, SelectTrigger, SelectLabel, SelectItem, SelectGroup, SelectContent, Select } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-
 import { newUserFormAction } from "@/actions/newUserForm"
-
 import { useFormState } from "react-dom"
 import AlertComponent from "@/components/AlertComponent/AlertComponent"
-import { useSession } from "next-auth/react"
 
 const initialValues:NewUserValidationSchema = {
   email:"",
   password: "",
   name: "",
-  type: "user",
-  token: ""
+  type: "user"
 }
 
 function NewUserForm(){
-    const { data } = useSession()
-    const token = data?.user.token
     const [newUserFormActionState, formAction] = useFormState(newUserFormAction, {
         message: "",
     })
@@ -62,15 +56,12 @@ function NewUserForm(){
                       const formData = new FormData(formRef.current!)
                       const type = getValues("type")
                       formData.append("type", type)
-                      
-                      formData.append("token", token!)
                       formAction(formData)
                     })(e)
                 }}
                 >
                 <Card className="max-w-2xl mx-auto">
           <CardHeader>
-            {/* <CardTitle>Cadastro de Usuário</CardTitle> */}
             <CardDescription>Preencha os campos para cadastrar um novo usuário.</CardDescription>
           </CardHeader>
           <CardContent>

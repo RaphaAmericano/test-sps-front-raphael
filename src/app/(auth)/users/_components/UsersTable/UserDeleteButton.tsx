@@ -6,7 +6,7 @@ import UserDeleteAlertDialog from "./UserDeleteAlertDialog"
 import { User } from "@/types/user"
 
 type UserDeleteButtonProps = {
-    user:User
+    user:User,
 }
 function UserDeleteButton({ user }:UserDeleteButtonProps){
     const { setDialogOpen, setUserToDelete, setAlertDialogComponent } = useContext(UsersContext)

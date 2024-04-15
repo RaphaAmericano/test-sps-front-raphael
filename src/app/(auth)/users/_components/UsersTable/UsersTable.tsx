@@ -18,7 +18,7 @@ async function UsersTable(){
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {users.map((user) => <UserRow key={user.id} {...user}/>)}                  
+                    {users.map((user) => <UserRow key={user.id} {...user} />)}                  
                 </TableBody>
               </Table>
       </div>

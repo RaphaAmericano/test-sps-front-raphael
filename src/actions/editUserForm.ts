@@ -29,7 +29,7 @@ export async function editUserFormAction( prevState: EditUserFormState,  data: F
     } else {
 
         try {
-            const { id, ...props } = parsed.data
+            const { id,  ...props } = parsed.data
             const response = await putUser(id, props)
             console.log(response)
 

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Usuários",
 };
 
-export default function UsersLayout({
+export default function UserLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -19,9 +19,7 @@ export default function UsersLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        <main className="flex items-center justify-center">
         {children}
-        </main>
       </body>
     </html>
   );

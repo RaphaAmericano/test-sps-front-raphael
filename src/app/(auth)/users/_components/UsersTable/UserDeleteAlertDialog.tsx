@@ -16,7 +16,10 @@ import { UsersContext } from "../../_context/user.context"
 import { deleteUser } from "@/actions/deleteUser"
 import AlertComponent from "@/components/AlertComponent/AlertComponent"
 
-  
+// type UserDeleteAlertDialogProps = {
+//   token: string
+// }  
+
 function UserDeleteAlertDialog() {
     const { setDialogOpen, userToDelete } = useContext(UsersContext)
     const [submitting, setSubiting] = useState(false)

@@ -5,7 +5,6 @@ import UserContextContainer from "./_context/user.context"
 
 export default function Users() {
   return (
-      <main className="flex items-center justify-center">
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container flex items-start gap-8 px-4 md:px-6">
             <UserContextContainer>
@@ -21,7 +20,6 @@ export default function Users() {
             </UserContextContainer>
           </div>
         </section>
-      </main>
   )
 }
 

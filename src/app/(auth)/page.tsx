@@ -6,9 +6,8 @@ import { useEffect } from "react";
 
 export default function AuthHome() {
     const { status } = useSession()
-    console.log(status)
     if(status === "unauthenticated"){
-        redirect("/login")
+        redirect("/")
     }
     useEffect(() => {
       console.log("(auth) page")

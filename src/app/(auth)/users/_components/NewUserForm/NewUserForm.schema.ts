@@ -7,7 +7,6 @@ const schema = z.object({
     }),
     password: z.string().min(1),
     type: z.string(),
-    token: z.string()
 })
 
 type NewUserValidationSchema = z.infer<typeof schema>

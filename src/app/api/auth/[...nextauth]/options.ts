@@ -1,8 +1,7 @@
 import type { NextAuthOptions } from "next-auth"
 import { authUser } from "@/actions/authUser"
-import { redirect } from "next/navigation"
 import CredentialsProvider from "next-auth/providers/credentials"
-
+import { cookies } from "next/headers"
 export const options:NextAuthOptions = {
     providers: [      
         CredentialsProvider({
@@ -17,7 +16,8 @@ export const options:NextAuthOptions = {
                 const response = await authUser({ email, password });
                 if(response.message === "Usuário não autenticado") return null
                 const { data: { email:authEmail, password:authPassword, ...props} } = response;
-                console.log(props)
+                cookies().set("token", props.token)
+                    
                 return {
                     email:authEmail,
                     ...props
@@ -27,19 +27,21 @@ export const options:NextAuthOptions = {
     ],
     callbacks: {
         async jwt({ token, user }) {
-
             if(user) return {...token, ...user }
             return token
         },
         async session({ session, token, user }) {
-            console.log({ session, token, user })
             // session.user = token.user 
-            return { ...session, ...token, user:token}
+            if(session.user) return { ...session, ...token, user:token}
+            return session
         },
-
     },
     pages:{
-        signIn:"/login",
-        signOut: "/"
+        signIn:"/"
+    },
+    events: {
+        async signOut() {
+            cookies().delete("token")
+        },
     }
 }

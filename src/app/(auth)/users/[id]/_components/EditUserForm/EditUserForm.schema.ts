@@ -7,7 +7,7 @@ const schema = z.object({
         message: "Email inválido"
     }).optional(),
     password: z.string().min(1).optional(),
-    type: z.string().optional()
+    type: z.string().optional(),
 })
 
 type EditUserValidationSchema = z.infer<typeof schema>
