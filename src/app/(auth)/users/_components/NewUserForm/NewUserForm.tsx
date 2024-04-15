@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button"
 import { newUserFormAction } from "@/actions/newUserForm"
 import { useFormState } from "react-dom"
 import AlertComponent from "@/components/AlertComponent/AlertComponent"
+import InputFeedback from "@/components/InputFeeback"
 
 const initialValues:NewUserValidationSchema = {
   email:"",
@@ -70,33 +71,45 @@ function NewUserForm(){
                 <Controller 
                   control={control}
                   name="name"
-                  render={( { field }) => (
+                  render={( { field, fieldState }) => {
+                    const { error } = fieldState
+                    
+                    return (
                     <div className="space-y-2">
                       <Label htmlFor="name">Nome</Label>
                       <Input id="name" required placeholder="João" {...field } />
+                      {(error !== undefined && error.message !== undefined) ? <InputFeedback text={error.message} /> : "" }
                     </div>
-                  )}
+                    )}
+                  }
                 />
                 <Controller 
                   control={control}
                   name="email"
-                  render={( { field }) => (
+                  render={( { field, fieldState }) => {
+                    const { error } = fieldState
+                    return (
                     <div className="space-y-2">
                       <Label htmlFor="email">Email</Label>
-                      <Input id="email" placeholder="usuario@spsgroup.com.br" required {...field }  />
+                      <Input id="email" placeholder="usuario@spsgroup.com.br" {...field }  />
+                      {(error !== undefined && error.message !== undefined) ? <InputFeedback text={error.message} /> : "" }
                     </div>
-                  )}
+                    )
+                  }}
                 />  
               </div>
               <Controller 
                   control={control}
                   name="password"
-                  render={( { field }) => (
+                  render={( { field, fieldState }) => {
+                    const { error } = fieldState
+                    return (
                     <div className="space-y-2">
                       <Label htmlFor="password">Password</Label>
                       <Input id="password" required type="password" {...field } />
+                      {(error !== undefined && error.message !== undefined) ? <InputFeedback text={error.message} /> : "" }
                     </div>
-                  )}
+                  )}}
                 />
                 <Controller 
                   control={control}
