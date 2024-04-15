@@ -1,13 +1,14 @@
 "use server"
 import { User } from "@/types/user"
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
 type PostUserRequestType = Omit<User, "id">
 export async function postUser(data:PostUserRequestType){
     const cookieStore = cookies()
     const token = cookieStore.get("token")
     if(token === undefined){
-        throw new Error("Token indefinido") 
+        redirect("/")
     }
     console.log(token.value)
     const user = await fetch(`${process.env.API_HOST}/users`, {

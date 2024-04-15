@@ -2,12 +2,13 @@
 
 import { revalidateTag } from "next/cache"
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 type DeleteUserRequestType = string
 export async function deleteUser(id:DeleteUserRequestType){
     const cookieStore = cookies()
     const token = cookieStore.get("token")
     if(token === undefined){
-        throw new Error("Token indefinido") 
+        redirect("/")
     }
     const response = await fetch(`${process.env.API_HOST}/users/${id}`, {
         method: "DELETE",
